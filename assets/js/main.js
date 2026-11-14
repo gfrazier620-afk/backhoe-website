@@ -37,29 +37,46 @@
         items.forEach(function (el) { el.classList.add('in'); });
     }
 
-    // ---- Lightbox ----
+    // ---- Lightbox (mouse + keyboard) ----
     var box = document.getElementById('lightbox');
     if (box) {
         var big = document.getElementById('lightbox-img');
-        var close = function () { box.classList.remove('open'); };
+        var closeBtn = box.querySelector('.lightbox-close');
+        var opener = null;
+        var close = function () {
+            box.classList.remove('open');
+            if (opener) opener.focus();
+        };
+        var open = function (fig) {
+            var img = fig.querySelector('img');
+            opener = fig;
+            big.src = img.currentSrc || img.src;
+            big.alt = img.alt;
+            box.classList.add('open');
+            closeBtn.focus();
+        };
         document.querySelectorAll('.lightbox-trigger').forEach(function (fig) {
-            fig.addEventListener('click', function () {
-                var img = fig.querySelector('img');
-                big.src = img.currentSrc || img.src;
-                big.alt = img.alt;
-                box.classList.add('open');
+            fig.addEventListener('click', function () { open(fig); });
+            fig.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(fig); }
             });
         });
+        closeBtn.addEventListener('click', close);
         box.addEventListener('click', function (e) { if (e.target !== big) close(); });
-        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && box.classList.contains('open')) close();
+        });
     }
 
-    // ---- Quote form: opens an email to the company with the details filled in ----
+    // ---- Quote form: sends to Travis by email (FormSubmit); falls back to the visitor's email app ----
     var EMAIL = 'travfraz@hotmail.com';
     document.querySelectorAll('.quote-form').forEach(function (form) {
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            var d = new FormData(form);
+        var ok = form.querySelector('.form-success');
+        var err = form.querySelector('.form-error');
+        var btn = form.querySelector('button[type="submit"]');
+        var label = btn.textContent;
+
+        function fallback(d) {
             var body = [
                 'Name: ' + d.get('name'),
                 'Phone: ' + d.get('phone'),
@@ -69,10 +86,42 @@
                 'Project details:',
                 d.get('details') || 'n/a'
             ].join('\n');
-            var subject = 'Quote request: ' + d.get('service');
-            window.location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-            var ok = form.querySelector('.form-success');
-            if (ok) ok.style.display = 'block';
+            window.location.href = 'mailto:' + EMAIL + '?subject=' +
+                encodeURIComponent('Quote request: ' + d.get('service')) + '&body=' + encodeURIComponent(body);
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var d = new FormData(form);
+            if (d.get('_honey')) return;               // bot trap
+            ok.style.display = 'none';
+            err.style.display = 'none';
+            btn.disabled = true;
+            btn.textContent = 'Sending…';
+
+            var payload = {};
+            d.forEach(function (v, k) { if (k !== '_next') payload[k] = v; });
+
+            fetch(form.dataset.endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+                .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+                .then(function (res) {
+                    var good = res.ok && (res.j.success === true || res.j.success === 'true');
+                    if (!good) throw new Error('not delivered');
+                    form.reset();
+                    ok.style.display = 'block';
+                })
+                .catch(function () {
+                    err.style.display = 'block';
+                    fallback(d);
+                })
+                .then(function () {
+                    btn.disabled = false;
+                    btn.textContent = label;
+                });
         });
     });
 })();

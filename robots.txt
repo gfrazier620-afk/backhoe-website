@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gfrazier620-afk.github.io/backhoe-website/sitemap.xml

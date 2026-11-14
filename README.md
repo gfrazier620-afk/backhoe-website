@@ -15,12 +15,17 @@ A modern, mobile-friendly website for a Southern California backhoe and excavati
 
 ## Tech
 
-Plain HTML, CSS, and JavaScript. There is no build step. Fonts (Oswald and Inter) load from Google Fonts. The quote form opens an email to the company with the details filled in.
+Plain HTML, CSS, and JavaScript, with no framework. Fonts (Oswald and Inter) load from Google Fonts.
+
+- **Quote form:** sends to Travis by email through [FormSubmit](https://formsubmit.co) and falls back to opening the visitor's email app if that fails. The first time it is used, FormSubmit emails Travis a one-time confirmation link that must be clicked.
+- **Search and sharing:** page titles and descriptions, canonical URLs, business structured data (JSON-LD), `sitemap.xml`, `robots.txt`, and a social-share image.
+- **Pages are generated** from `tools/build_pages.py` (Python 3 + Pillow). Edit the script and run `python tools/build_pages.py` to rebuild the HTML, sitemap, share image, and favicons. Set `SITE_URL` in that script when the custom domain goes live.
 
 ```
 index.html  services.html  gallery.html  contact.html
-assets/
-  css/styles.css  js/main.js  img/
+sitemap.xml  robots.txt  favicon.ico
+assets/  css/styles.css  js/main.js  img/
+tools/build_pages.py
 ```
 
 To run it locally, open `index.html` in a browser, or serve the folder:
