@@ -544,3 +544,28 @@ footer a:hover { color: var(--yellow); }
 }
 
 @media (max-width: 700px) { section { padding: 68px 0; } }
+
+/* ---------- Trades chips, equipment, service area ---------- */
+.chips { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 0 auto 26px; max-width: 880px; }
+.chips li {
+    padding: 12px 22px;
+    font-family: var(--display);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+.chips li:hover { border-color: var(--yellow); color: var(--yellow); }
+.trades { padding-bottom: 0; }
+.trades .section-head { margin-bottom: 30px; }
+
+.machine { background: var(--ink); }
+.machine-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center; }
+.machine-photo img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--line); }
+.spec-list { list-style: none; display: grid; gap: 12px; margin-top: 22px; }
+.spec-list li { display: flex; gap: 12px; align-items: flex-start; font-weight: 500; }
+.spec-list svg { width: 22px; height: 22px; flex: none; margin-top: 2px; color: var(--yellow); }
+.spec-list a { color: var(--yellow); }
+@media (max-width: 860px) { .machine-grid { grid-template-columns: 1fr; gap: 32px; } }
