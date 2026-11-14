@@ -117,7 +117,7 @@ section { padding: 96px 0; }
 .navbar.scrolled { background: rgba(11, 11, 12, 0.94); padding-top: 10px; padding-bottom: 10px; }
 
 .nav-left { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.nav-logo { width: 46px; height: 32px; object-fit: contain; }
+.nav-logo { width: 68px; height: auto; }
 .nav-title {
     font-family: var(--display);
     font-size: 1.15rem;
@@ -194,7 +194,7 @@ section { padding: 96px 0; }
     .nav-links a { padding: 14px 8px; font-size: 1.2rem; border-radius: 0; border-bottom: 1px solid var(--line); background: none; }
     .nav-links a.active { background: none; color: var(--yellow); }
 }
-@media (max-width: 480px) { .nav-title { font-size: 0.82rem; letter-spacing: 0.03em; } .nav-logo { width: 38px; } .nav-left { gap: 8px; min-width: 0; } }
+@media (max-width: 480px) { .nav-title { font-size: 0.82rem; letter-spacing: 0.03em; } .nav-logo { width: 52px; } .nav-left { gap: 8px; min-width: 0; } }
 
 /* ---------- Hero (home) ---------- */
 .hero {
@@ -466,7 +466,7 @@ section { padding: 96px 0; }
 /* ---------- Footer ---------- */
 footer { background: #060607; border-top: 1px solid var(--line); padding: 56px 0 28px; }
 .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-.footer-brand img { width: 120px; margin-bottom: 14px; }
+.footer-brand img { width: 260px; max-width: 100%; margin: 0 0 14px -6px; }
 .footer-brand p { color: var(--muted); max-width: 320px; font-size: 0.95rem; }
 footer h4 { font-family: var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--yellow); margin-bottom: 14px; font-weight: 600; }
 footer ul { list-style: none; display: grid; gap: 8px; }
