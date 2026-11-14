@@ -1,4 +1,4 @@
-# Travis Frazier Backhoe Company LLC
+# Travis Frazier Backhoe Service LLC
 
 A modern, mobile-friendly website for a Southern California backhoe and excavation company, built by [Dry Lightning Labs](https://github.com/gfrazier620-afk) as a gift for the owner.
 
