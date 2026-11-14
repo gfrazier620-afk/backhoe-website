@@ -194,7 +194,7 @@ section { padding: 96px 0; }
     .nav-links a { padding: 14px 8px; font-size: 1.2rem; border-radius: 0; border-bottom: 1px solid var(--line); background: none; }
     .nav-links a.active { background: none; color: var(--yellow); }
 }
-@media (max-width: 480px) { .nav-title { font-size: 0.95rem; } }
+@media (max-width: 480px) { .nav-title { font-size: 0.82rem; letter-spacing: 0.03em; } .nav-logo { width: 38px; } .nav-left { gap: 8px; min-width: 0; } }
 
 /* ---------- Hero (home) ---------- */
 .hero {
